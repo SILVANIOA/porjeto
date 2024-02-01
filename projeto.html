@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codificador/Descodificador</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #2b2b2b;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    main {
+      background-color: #383838;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    div {
+      margin-bottom: 15px;
+    }
+
+    input {
+      font-size: 18px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 80%;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    label, span {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    #resultado {
+      display: inline-block;
+      border: 1px solid #777;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 18px;
+      width: 80%;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Codificador/Descodificador</h1>
+    <div>
+      <label for="inputTexto">Texto:</label>
+      <input type="text" id="inputTexto" placeholder="Digite seu texto">
+    </div>
+
+    <div>
+      <button onclick="processarTexto(3)">Codificar</button>
+      <button onclick="processarTexto(-3)">Descodificar</button>
+      <button onclick="copiarResultado()">Copiar resultado</button>
+    </div>
+
+    <div>
+      <label for="resultado">Resultado:</label>
+      <span id="resultado"></span>
+    </div>
+  </main>
+
+  <script>
+    function processarTexto(operacao) {
+      var texto = document.getElementById("inputTexto").value.toLowerCase();
+      var resultado = "";
+
+      for (var i = 0; i < texto.length; i++) {
+        var charCode = texto.charCodeAt(i);
+
+        if (charCode >= 97 && charCode <= 122) {
+          resultado += String.fromCharCode(((charCode - 97 + 26 + operacao) % 26) + 97);
+        } else {
+          resultado += texto[i];
+        }
+      }
+
+      document.getElementById("resultado").textContent = resultado;
+    }
+
+    function copiarResultado() {
+      var resultado = document.getElementById("resultado");
+      var tempInput = document.createElement("input");
+      tempInput.value = resultado.textContent;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+    }
+  </script>
+</body>
+</html>
